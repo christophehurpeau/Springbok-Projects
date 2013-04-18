@@ -18,8 +18,15 @@ class SearchableHistory extends SSqlModel{
 		))
 	);
 	
+	public static $belongsTo=array(
+		'Project'=>array(array('searchable_id'=>'id'))
+	);
+	
 	
 	public function detailsFromProject($project){
 		return ' : '.$this->details->detailsFromProject($project);
+	}
+	public function detailsFromUser($project){
+		return ' : '.$this->details->detailsFromUser($project);
 	}
 }
