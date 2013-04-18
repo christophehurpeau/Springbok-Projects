@@ -9,7 +9,7 @@ class Repository extends SSqlModel{
 		* @ForeignKey('Project','id') 
 		*/ $project_id,
 		/** @SqlType('tinyint(2) unsigned') @Null
-		 * @Enum(1=>'SVN',2=>'Git',3=>'GitHub')
+		 * @Enum(1=>'SVN',2=>'Git',21=>'GitHub')
 		*/ $type,
 		/** @SqlType('varchar(255)') @NotNull 
 		*/ $path,
@@ -43,12 +43,13 @@ class Repository extends SSqlModel{
 	}
 	
 	public function check(){
+		if($this->type===self::GITHUB) return UGitHub::check($this->path,true,true);
 		if($this->path[0]==='/'||stripos($this->path,'://')){
 			$source=$this->source=$this->path;
 			$this->path='project_'.$this->project_id;
 		}else $source=null;
-		if($this->type===self::GIT) return UGit::check($this->path(),$source);
-		if($this->type===self::GITHUB) return UGitHub::check($this->path);
+		if($this->type===self::GIT) return UGit::check($this->path(),$source,true);
+		return false;
 	}
 
 	public function remove(){
