@@ -1,0 +1,72 @@
+Repository:
+  New: Nouveau dépôt
+  type: Type
+  path: Répertoire
+Role:
+  "": Rôles
+  New: Nouveau rôle
+  id: Id
+  name: Nom
+Project:
+  id: '#'
+  name: Nom
+  text: Texte de description
+  website: Site internet
+  public: Public
+  status: Statut
+  parent_id: Projet parent
+  owner: Créateur
+  created: Créé le
+  updated: Maj le
+Tracker:
+  id: Id
+  name: Nom
+  position: Position
+  in_chlog: Dans Changelog
+  in_roadmap: Dans Roadmap
+Issue:
+  "": Demandes
+  id: Id
+  project_id: Projet
+  tracker_id: Tracker
+  title: Titre
+  description: Description
+  author_id: Auteur
+  category_id: Catégorie
+  status_id: Statut
+  priority_id: Priorité
+  version_id: Version cible
+  start_date: Début
+  due_date: Echéance
+  done_ratio: '% réalisé'
+  estimated_hours: Heures estimées
+  parent_id: Parent
+  created: Créé le
+  updated: Maj le
+IssuesCategory:
+  "": Catégorie
+IssuesPriority:
+  "": Priorité
+IssuesStatus:
+  "": Statut
+IssuesTracker:
+  "": Tracker
+User:
+  "": Utilisateurs
+  New: Nouvel utilisateur
+  status: Statut
+  created: Créé le
+  updated: Maj le
+AclGroup:
+  "": Rôles
+  New: Nouveau rôle
+  id: Id
+  parent_id: Parent
+  name: Nom
+  created: Créé le
+SearchableHistory:
+  History.60: Nouvelle révision
+  History.70: Nouvelle demande
+  History.71: Demande éditée
+  History.72: Demande fermée
+  History.73: Demande fermée par révision

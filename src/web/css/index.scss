@@ -1,0 +1,40 @@
+$PAGE_FIXED:true; $PAGE_VERSION:2;
+$BreadcrumbsInVariable:true;
+
+@includeCore 'colors/simpleblue';
+@includeCore 'default';
+@includeCore 'base/ajax';
+@includeCore 'icons/lock';
+@includePlugin 'users/_users';
+
+@includeLib 'syntaxHighlighter/shCoreRDark.css';
+
+
+.icon.folder{background:url('COREIMG/silk_icon_set/folder.png')}
+.icon.file-A{background:url('COREIMG/silk_icon_set/bullet_add.png')}
+.icon.file-M{background:url('COREIMG/silk_icon_set/bullet_orange.png')}
+.icon.file-D{background:url('COREIMG/silk_icon_set/bullet_delete.png')}
+
+
+#container #page .wikiContent h1{
+	background:none;
+	color:#000;
+	padding:0;
+}
+
+.wikiContent{
+	h2,h3{ margin-top:8px }
+	h4,h5,h6{ margin-top:6px }
+}
+
+
+code.variable:after{
+	display:inline !important;
+	clear:none;
+}
+
+pre,code{
+	tab-size:4;
+	-moz-tab-size:4;
+	-o-tab-size:4;
+}
