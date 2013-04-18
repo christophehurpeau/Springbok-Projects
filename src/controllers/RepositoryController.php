@@ -50,7 +50,7 @@ class RepositoryController extends AController{
 	function file_diff($path,$rev,$branch,$download){
 		$project=AController::findProject('RepositoryView',array('Repository'));
 		if($project->repository===false) notFound();
-		$content=$repository->open()->diff($path,$rev,$branch);
+		$content=$project->repository->open()->diff($path,$rev,$branch);
 		$content=substr(strstr(substr(strstr(substr(strstr(substr(strstr($content,"\n"),1),"\n"),1),"\n"),1),"\n"),1);
 		
 		if($download!==null) self::sendText($content,basename($path));
