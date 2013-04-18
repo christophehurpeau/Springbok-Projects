@@ -40,10 +40,7 @@ class RepositoryController extends AController{
 		
 		if($download!==null) self::sendText($content,basename($path));
 		else{
-			$ext=pathinfo($path,PATHINFO_EXTENSION);
-			if($ext==='rb') $ext='ruby';
-			set('brush',in_array($ext,array('c','cpp','css','delphi','pas','diff','patch','erl','groovy','js',
-				'java','jfx','perl','pl','php','py','ruby','scala','sql','xml','xhtml','xslt','html'))?$ext:'plain');
+			self::_setBrush($path);
 			mset($rev,$content,$path);
 			render();
 		}
@@ -58,13 +55,21 @@ class RepositoryController extends AController{
 		
 		if($download!==null) self::sendText($content,basename($path));
 		else{
-			$ext=pathinfo($path,PATHINFO_EXTENSION);
-			if($ext==='rb') $ext='ruby';
-			set('brush',in_array($ext,array('c','cpp','css','delphi','pas','diff','patch','erl','groovy','js','java','jfx','perl','pl','php','py','ruby','scala','sql','xml','xhtml','xslt','html'))?$ext:'plain');
+			self::_setBrush($path);
 			mset($rev,$content,$path);
 			render();
 		}
 	}
+	
+	private static function _setBrush($path){
+		$ext=pathinfo($path,PATHINFO_EXTENSION);
+		if($ext==='php') self::set('brush','php html-script:true');
+		elseif($ext==='rb') self::set('brush','ruby');
+		elseif(in_array($ext,array('c','cpp','css','delphi','pas','diff','patch','erl','groovy','js',
+			'java','jfx','perl','pl','php','py','ruby','scala','sql','xml','xhtml','xslt','html'))) self::set('brush',$ext);
+		else self::set('brush','text');
+	}
+	
 	
 	/** @Check @ValidParams
 	* committers > @Type(array[]int)
