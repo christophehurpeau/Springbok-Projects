@@ -2,7 +2,8 @@
 class RepositoryController extends AController{
 	/** @ValidParams @Id */
 	function update(int $id){
-		$repository=Repository::findOneByProject_id($id)->notFoundIfFalse();
+		$repository=Repository::findOneByProject_id($id);
+		notFoundIfFalse($repository);
 		$repository->fetch();
 		renderText('1');
 	}
