@@ -2,7 +2,7 @@
 /** */
 class TranslationsController extends AController{
 	/** */
-	function index(){
+	static function index(){
 		$project=AController::findProject('SeeTranslations',array('Repository'=>array('type'=>QFind::INNER)));
 		
 		$repo=$project->repository->open();
@@ -24,7 +24,7 @@ class TranslationsController extends AController{
 	
 	
 	/** @NotEmpty('lang') */
-	function project($lang){
+	static function project($lang){
 		$project=AController::findProject('SeeTranslations',array('Repository'=>array('type'=>QFind::INNER)));
 		mset($lang);
 		

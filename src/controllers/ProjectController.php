@@ -1,7 +1,7 @@
 <?php
 class ProjectController extends AController{
 	/** */
-	function index(){
+	static function index(){
 		set('projects',Project::findAll(CSecure::user()));
 		render();
 	}
@@ -22,7 +22,7 @@ class ProjectController extends AController{
 	}
 	
 	/** @SubAction('Searchable') */
-	function view($project){
+	static function view($project){
 		$project->findWith('History',array('orderBy'=>array('created'=>'DESC'),'limit'=>8));
 		render();
 	}
@@ -44,7 +44,7 @@ class ProjectController extends AController{
 	
 	
 	/** @ValidParams */
-	function members(){
+	static function members(){
 		$project=AController::findProject('SeeMembers');
 		$project->findWith('ProjectMember',array('with'=>array('User'=>array('with'=>array('Parent')),'Role')));
 		if($project->isAdmin()){
@@ -59,7 +59,7 @@ class ProjectController extends AController{
 	* user_id > @Type(array[]int)
 	* role_id > @Type(array[]int)
 	*/
-	function addMembers($user_id,$role_id){
+	static function addMembers($user_id,$role_id){
 		$project=AController::findProject('ManageMembers');
 		if(!$project->isAdmin()) forbidden();
 		foreach($user_id as $userId)
@@ -70,7 +70,7 @@ class ProjectController extends AController{
 	/** @Check @ValidParams @Id('idMember')
 	* roles > @Type(array[]int)
 	*/
-	function editMember(int $idMember,$roles){
+	static function editMember(int $idMember,$roles){
 		$project=AController::findProject('ManageMembers');
 		if(!$project->isAdmin()) forbidden();
 		if(!empty($roles)){
@@ -84,7 +84,7 @@ class ProjectController extends AController{
 	}
 	
 	/** @ValidParams */
-	function activity(){
+	static function activity(){
 		$project=AController::findProject('ProjectActivity');
 		$paginate=$project->findWithPaginate('History',array('with'=>array('details'),'orderBy'=>array('created'=>'DESC')));
 		$paginate->pageSize(25)->execute();

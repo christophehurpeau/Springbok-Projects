@@ -4,7 +4,7 @@ class UserController extends Controller{
 	/* @ImportFunction('users','','User','#') */
 	
 	/** @SubAction('Searchable') */
-	function view($user){
+	static function view($user){
 		$query=Project::QAll()->withParent()->orderBy(array('sb.created'=>'DESC'))->with('ProjectMember',array('fields'=>false,'join'=>true));
 		$where=array('mbr.user_id'=>$user->id);
 		$connectedUser=CSecure::user();

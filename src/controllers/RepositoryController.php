@@ -1,7 +1,7 @@
 <?php
 class RepositoryController extends AController{
 	/** @ValidParams @Id */
-	function update(int $id){
+	static function update(int $id){
 		$repository=Repository::findOneByProject_id($id);
 		notFoundIfFalse($repository);
 		$repository->fetch();
@@ -9,7 +9,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams */
-	function view($path,$rev){
+	static function view($path,$rev){
 		$project=AController::findProject('RepositoryView');
 		if($project->hasRepository()){
 			$repository=Repository::findOneByProject_id($project->id);
@@ -24,7 +24,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams */
-	function file_history($path){
+	static function file_history($path){
 		$project=AController::findProject('RepositoryView',array('Repository'));
 		if($project->repository===false) notFound();
 		$history=$project->repository->open()->fileHistory($path,null,null,array('limit'=>'30'));
@@ -33,7 +33,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams */
-	function file($path,$rev,$download){
+	static function file($path,$rev,$download){
 		$project=AController::findProject('RepositoryView',array('Repository'));
 		if($project->repository===false) notFound();
 		$content=$project->repository->open()->cat($path,$rev);
@@ -47,7 +47,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams */
-	function file_diff($path,$rev,$branch,$download){
+	static function file_diff($path,$rev,$branch,$download){
 		$project=AController::findProject('RepositoryView',array('Repository'));
 		if($project->repository===false) notFound();
 		$content=$project->repository->open()->diff($path,$rev,$branch);
@@ -133,7 +133,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams */
-	function revisions(){
+	static function revisions(){
 		$project=AController::findProject('RepositoryView');
 		if(!$project->hasRepository()) notFound();
 		$revisions=RepositoryRevision::QAll()->byRepository_id($project->repository_id)
@@ -144,7 +144,7 @@ class RepositoryController extends AController{
 	}
 	
 	/** @ValidParams @NotEmpty('path') */
-	function revision($path){
+	static function revision($path){
 		$rev=&$path;
 		$project=AController::findProject('RepositoryView');
 		if(!$project->hasRepository()) notFound();
@@ -156,7 +156,7 @@ class RepositoryController extends AController{
 	
 	
 	/** @ValidParams */
-	function stats(){
+	static function stats(){
 		// Commits per month
 		// Commits per author
 		render();
