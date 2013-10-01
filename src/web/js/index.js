@@ -1,5 +1,4 @@
-includeCore('libs/jquery-1.9.1-dev');
-includeCore('libs/jquery-migrate-1.1.1');
+includeCore('libs/jquery-latest');
 
 includeCore('springbok.base');
 includeCore('springbok.breadcrumbs');

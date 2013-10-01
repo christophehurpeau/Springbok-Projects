@@ -52,4 +52,8 @@ svn-commit*.tmp
 /delayedEnhance.db
 /src/web/sprites/*
 /src/web/files/*
-/config
+/src/config/_.php
+/src/config/_prod.php
+/src/config/_work.php
+/src/config/mail.php
+/src/config/secure.php
