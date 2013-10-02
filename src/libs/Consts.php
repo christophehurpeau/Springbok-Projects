@@ -8,7 +8,7 @@ class AConsts{
 	const INVALID=0,VALID=1,DELETED=2,MERGED=3,CLOSED=5;
 	
 	
-	public static function searchablesStatuses(){
+	public static function searchableStatuses(){
 		return array(self::INVALID=>'Invalide',self::VALID=>'Valide',self::DELETED=>'Supprimé',self::MERGED=>'Fusionné',self::CLOSED=>'Fermé');
 	}
 	
