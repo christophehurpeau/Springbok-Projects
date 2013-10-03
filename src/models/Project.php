@@ -30,7 +30,7 @@ class Project extends Searchable{
 		$where=array('sb.status='.self::ACTIVE);
 		self::_findConditions($query,$user,$where);
 		if($limit!==null) $query->limit($limit);
-		return $query->execute();
+		return $query->fetch();
 	}
 	
 	public static function findOneById($id,$options=array()){
@@ -46,7 +46,7 @@ class Project extends Searchable{
 		$where=array('id'=>$id,'sb.status='.self::ACTIVE);
 		self::_findConditions($query,$user,$where);
 		if($with!==null) $query->setAllWith($with);
-		return $query->execute();
+		return $query->fetch();
 	}
 	
 	public static function _findConditions(&$query,&$user,&$where){

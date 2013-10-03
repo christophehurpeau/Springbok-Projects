@@ -9,7 +9,7 @@ class UserController extends Controller{
 		$where=array('mbr.user_id'=>$user->id);
 		$connectedUser=CSecure::user();
 		Project::_findConditions($query,$connectedUser,$where);
-		$user->projects=$query->groupBy('p.id')->tabResKey()->execute();
+		$user->projects=$query->groupBy('p.id')->tabResKey()->fetch();
 		
 		if(!empty($user->projects)){
 			$paginate=$user->findWithPaginate('SearchableHistory',array('dataName'=>'history','with'=>array('details','Project'=>array('with'=>array('Parent'))),

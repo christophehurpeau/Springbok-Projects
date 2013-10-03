@@ -50,7 +50,7 @@ class ProjectController extends AController{
 		if($project->isAdmin()){
 			$query=User::QListName();
 			if(!empty($project->members)) $query->where(array('id NOTIN'=>array_map(function(&$member){return $member->user->id;},$project->members)));
-			set('potentialNewMembers',$query->execute());
+			set('potentialNewMembers',$query->fetch());
 		}
 		render();
 	}
