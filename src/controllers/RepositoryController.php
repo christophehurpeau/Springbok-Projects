@@ -78,13 +78,13 @@ class RepositoryController extends AController{
 		if(!$project->hasRepository()) notFound();
 		if($committers!==null){
 			/*UserHistory::QDeleteAll()->where(array('type'=>AHistory::REPOSITORY_NEW_REVISION,
-				'EXISTS (SELECT 1 FROM repository_revisions rr WHERE rr.id=rel_id AND repository_id='.$rId.')'));
+				'EXISTS (SELECT 1 FROM repository_revisions rr WHERE rr.id=rel_id AND repository_id='.$rId.')'))->execute();
 			UserHistory::QDeleteAll()->where(array('type'=>AHistory::ISSUE_CLOSE_BY_REV,
 				'EXISTS (SELECT 1 FROM issue_revisions ir LEFT JOIN repository_revisions rr ON ir.revision_id=rr.id'
-					.' WHERE rr.id=rel_id AND repository_id='.$rId.')'));
+					.' WHERE rr.id=rel_id AND repository_id='.$rId.')'))->execute();
 			*/
 			foreach($committers as $cId=>$uId){
-				RepositoryCommitter::QUpdateOneField('user_id',e($uId,null))->byIdAndRepository_id($cId,$project->repository_id);
+				RepositoryCommitter::QUpdateOneField('user_id',e($uId,null))->byIdAndRepository_id($cId,$project->repository_id)->execute();
 			}
 			
 			$COMMON_SQL='UPDATE searchable_history ph'
@@ -117,14 +117,14 @@ class RepositoryController extends AController{
 					->with('RepositoryCommitter',false)
 					->where(array('rc.user_id'=>true))
 					->groupBy(array('rc.user_id','rr.id'))
-				);
+				)->execute();
 			UserHistory::QInsertSelect()->cols('user_id,type,created,rel_id')
 				->query(RepositoryRevision::QAll()->setFields(array('(rc.user_id)',AHistory::ISSUE_CLOSE_BY_REV,'committed','(ir.id)'))
 					->with('RepositoryCommitter',false)
 					->with('IssueRevision',array('fields'=>false,'join'=>true))
 					->where(array('rc.user_id'=>true,'ir.closed'=>true))
 					->groupBy(array('rc.user_id','rr.id'))
-				);*/
+				)->execute();*/
 		}
 		$committers=RepositoryCommitter::findAllByRepository_id($project->repository_id);
 		$users=User::findListName();
@@ -138,7 +138,8 @@ class RepositoryController extends AController{
 		if(!$project->hasRepository()) notFound();
 		$revisions=RepositoryRevision::QAll()->byRepository_id($project->repository_id)
 			->orderBy(array('committed'=>'DESC'))->with('RepositoryCommitter','name')
-			->paginate()->pageSize(25);
+			->paginate()->pageSize(25)
+			->execute();
 		mset($revisions);
 		render();
 	}

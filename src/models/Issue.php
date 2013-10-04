@@ -131,6 +131,6 @@ class Issue extends SSqlModel{
 			'activity_id'=>CSettings::get('Repository.commit.timeActivityId'),
 			'hours'=>$hours,
 			'spent_on'=>$revision->committed,
-		));
+		))->execute();
 	}
 }

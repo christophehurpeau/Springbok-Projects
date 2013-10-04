@@ -61,7 +61,7 @@ class RepositoryRevision extends SSqlModel{
 	}
 
 	public static function findOneInfos($rId,$rev){
-		return self::QOne()->byRepository_idAndRevision($rId,$rev)->with('Committer');
+		return self::QOne()->byRepository_idAndRevision($rId,$rev)->with('Committer')->fetch();
 	}
 	
 	public function afterInsert(){
@@ -83,7 +83,7 @@ class RepositoryRevision extends SSqlModel{
 					if(preg_match_all('/'.$issueR.'/i',$m0,$mI)){
 						foreach($mI[1] as $i=>$issueId){
 							$issueId=(int)$issueId;
-							$issue=Issue::ById($issueId);
+							$issue=Issue::ById($issueId)->fetch();
 							if($issue===false || !($issue->project_id===$this->repository->project_id 
 									|| $project->isAncestorOf($issue->project_id)
 									|| $project->isDescendantOf($issue->project_id))) continue;

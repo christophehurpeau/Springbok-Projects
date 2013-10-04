@@ -16,7 +16,7 @@ class AdminUsersController extends Controller{
 	static function add(User $user){
 		if($user!==null && !CValidation::hasErrors()){
 			if($user->pwd !== $user->pwd_confirm) CValidation::addError('pwd',_t('The password is not the same'));
-			elseif(User::QExist()->byEmail($user->email)) CValidation::addError('email',_t('This email is already registered'));
+			elseif(User::QExist()->byEmail($user->email)->fetch()) CValidation::addError('email',_t('This email is already registered'));
 			else{
 				$user->pwd=USecure::hashWithSalt($user->pwd);
 				$user->insert();

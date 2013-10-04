@@ -18,6 +18,6 @@ class IssuesTracker extends SSqlModel{
 			array('Evolution',true,true,1),
 			array('Anomalie',true,false,2),
 			array('Assistance',false,false,3),
-		));
+		))->execute();
 	}
 }

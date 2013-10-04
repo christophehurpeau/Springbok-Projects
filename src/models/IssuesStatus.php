@@ -20,10 +20,10 @@ class IssuesStatus extends SSqlModel{
 			array('Résolu',false,false,3),
 			array('Fermé',true,false,4),
 			array('Rejeté',true,false,5),
-		));
+		))->execute();
 	}
 	
 	public static function isIssueClosed($statusId){
-		return self::QValue()->field('closed')->byId($statusId) !== null;
+		return self::QValue()->field('closed')->byId($statusId)->fetch() !== null;
 	}
 }

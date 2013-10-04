@@ -20,6 +20,6 @@ class RepositoryRevisionChange extends SSqlModel{
 		$dirname=dirname($path);
 		if(empty($dirname)){ $dirname='.'; $filename=$path; }
 		else $filename=substr($path,strlen($dirname)+1);
-		self::QInsert()->set(array('revision_id'=>$revisionId,'path'=>$path,'dirname'=>$dirname,'filename'=>$filename,'type'=>$type));
+		self::QInsert()->set(array('revision_id'=>$revisionId,'path'=>$path,'dirname'=>$dirname,'filename'=>$filename,'type'=>$type))->execute();
 	}
 }

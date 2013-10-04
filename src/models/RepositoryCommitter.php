@@ -18,18 +18,18 @@ class RepositoryCommitter extends SSqlModel{
 		*/ $user_id;
 	
 	public static function getOrCreate($repositoryId,$committerName,$committerEmail){
-		$rc=self::QOne()->byRepository_idAndNameAndEmail($repositoryId,$committerName,$committerEmail);
+		$rc=self::QOne()->byRepository_idAndNameAndEmail($repositoryId,$committerName,$committerEmail)->fetch();
 		if($rc!==false) return $rc;
 		
 		$rc=new RepositoryCommitter;
 		$rc->repository_id=$repositoryId;
 		$rc->name=$committerName;
 		$rc->email=$committerEmail;
-		$userId=User::QValue()->field('id')->where(array('OR'=>array('email LIKE'=>&$committerEmail,'CONCAT(first_name," ",last_name) LIKE'=>&$committerName)));
+		$userId=User::QValue()->field('id')->where(array('OR'=>array('email LIKE'=>$committerEmail,'CONCAT(first_name," ",last_name) LIKE'=>$committerName)))->fetch();
 		if($userId!==false) $rc->user_id=$userId;
 		$rc->insert();
 		return $rc;
 		
-		//return self::QInsert()->set(array('repository_id'=>$repositoryId,'name'=>$committerName));
+		//return self::QInsert()->set(array('repository_id'=>$repositoryId,'name'=>$committerName))->execute();
 	}
 }

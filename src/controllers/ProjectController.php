@@ -74,12 +74,12 @@ class ProjectController extends AController{
 		$project=AController::findProject('ManageMembers');
 		if(!$project->isAdmin()) forbidden();
 		if(!empty($roles)){
-			ProjectMemberRole::QDeleteAll()->byMember_id($idMember);
+			ProjectMemberRole::QDeleteAll()->byMember_id($idMember)->execute();
 			foreach($roles as $roleId)
-				ProjectMemberRole::QInsert()->ignore()->set(array('member_id'=>$idMember,'role_id'=>$roleId));
+				ProjectMemberRole::QInsert()->ignore()->set(array('member_id'=>$idMember,'role_id'=>$roleId))->execute();
 			redirect($project->link('members',''));
 		}
-		set('member',ProjectMember::ById($idMember)->with('ProjectMemberRole','role_id')->with('User','first_name,last_name'));
+		set('member',ProjectMember::ById($idMember)->with('ProjectMemberRole','role_id')->with('User','first_name,last_name')->fetch());
 		render();
 	}
 	

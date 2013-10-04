@@ -26,17 +26,17 @@ class ProjectMember extends SSqlModel{
 	}
 	
 	public static function byProject($idProject){
-		return self::QAll()->byProject_id($idProject);
+		return self::QAll()->byProject_id($idProject)->fetch();
 	}
 	
 	public static function findListNameByProject($idProject){
-		return self::QList()->field('id')->with('User',array('fields'=>array('CONCAT(first_name," ",last_name)')))->byProject_id($idProject);
+		return self::QList()->field('id')->with('User',array('fields'=>array('CONCAT(first_name," ",last_name)')))->byProject_id($idProject)->fetch();
 	}
 	
 	public static function create($projectId,$userId,$roleIds){
-		$pmId=self::QInsert()->set(array('project_id'=>$projectId,'user_id'=>$userId));
+		$pmId=self::QInsert()->set(array('project_id'=>$projectId,'user_id'=>$userId))->execute();
 		if($pmId)
 			foreach($roleIds as $roleId)
-				ProjectMemberRole::QInsert()->set(array('member_id'=>$pmId,'role_id'=>$roleId));
+				ProjectMemberRole::QInsert()->set(array('member_id'=>$pmId,'role_id'=>$roleId))->execute();
 	}
 }

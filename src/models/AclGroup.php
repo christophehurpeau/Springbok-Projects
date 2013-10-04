@@ -15,7 +15,7 @@ class AclGroup extends SSqlModel{
 			array(3,_t('Manager'),0,0,0),
 			array(4,_t('Developper'),0,0,0),
 			array(5,_t('Reporter'),0,0,0),
-		));
+		))->execute();
 		self::rebuild();
 	}
 }

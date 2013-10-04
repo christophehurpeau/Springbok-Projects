@@ -21,9 +21,9 @@ class IssueRevision extends SSqlModel{
 	);
 	
 	public static function create($issueId,$revisionId,$closed){
-		if(!($res=self::QInsert()->ignore()->set(array('issue_id'=>$issueId,'revision_id'=>$revisionId,'closed'=>$closed)))){
+		if(!($res=self::QInsert()->ignore()->set(array('issue_id'=>$issueId,'revision_id'=>$revisionId,'closed'=>$closed))->execute())){
 			if($closed)
-				self::QUpdateOneField('closed',true)->where(array('issue_id'=>$issueId,'revision_id'=>$revisionId))->limit1();
+				self::QUpdateOneField('closed',true)->where(array('issue_id'=>$issueId,'revision_id'=>$revisionId))->limit1()->execute();
 		}
 		return $res;
 	}

@@ -18,6 +18,6 @@ class IssuesPriority extends SSqlModel{
 			array('Haut',false,3),
 			array('Urgent',false,4),
 			array('Immédiat',false,5),
-		));
+		))->execute();
 	}
 }
