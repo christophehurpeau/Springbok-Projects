@@ -7,24 +7,25 @@ class ProjectController extends AController{
 	}
 	
 	/** @Check @Acl('CreateProject')
-	* project > @Valid('name','text','website','public')
-	*/ function add(Project $project){
-		if($project !== NULL){
-			if(!CValidation::hasErrors()){
-				$project->owner=CSecure::connected();
-				$project->visible=true;
+	 * project > @Valid('name','text','website','public')
+	 */
+	static function add(Project $project){
+		if ($project !== null) {
+			if (!CValidation::hasErrors()) {
+				$project->owner = CSecure::connected();
+				$project->visible = true;
 				$project->insert();
-				ProjectMember::create($project->id,$project->owner,array(AclGroup::MANAGER));
+				ProjectMember::create($project->id, $project->owner, array(AclGroup::MANAGER));
 				self::redirect($project->link());
 			}//else echo CValidation::errors();
 		}
-		render();
+		self::render();
 	}
 	
 	/** @SubAction('Searchable') */
 	static function view($project){
 		$project->findWith('History',array('orderBy'=>array('created'=>'DESC'),'limit'=>8));
-		render();
+		self::render();
 	}
 	
 	/** @Check @ValidParams
